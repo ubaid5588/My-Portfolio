@@ -4,6 +4,7 @@ import '../../core/constants/app_constants.dart';
 import '../../core/constants/portfolio_data.dart';
 import '../../core/responsive/responsive_layout.dart';
 import '../../core/utils/file_download_helper.dart';
+import '../../core/utils/url_launcher_helper.dart';
 import '../common/glass_container.dart';
 import '../common/gradient_text.dart';
 
@@ -183,7 +184,8 @@ class NavbarWidget extends StatelessWidget {
                   // GitHub Link Button
                   if (MediaQuery.sizeOf(context).width > 600)
                     InkWell(
-                      onTap: () {},
+                      onTap: () =>
+                          UrlLauncherHelper.launchUrl(PortfolioData.githubUrl),
                       borderRadius: BorderRadius.circular(12),
                       child: GlassContainer(
                         width: 40,

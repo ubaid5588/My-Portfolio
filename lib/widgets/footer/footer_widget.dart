@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../core/constants/app_colors.dart';
 import '../../core/constants/app_constants.dart';
 import '../../core/constants/portfolio_data.dart';
+import '../../core/utils/url_launcher_helper.dart';
 import '../common/glass_container.dart';
 import '../common/gradient_text.dart';
 
@@ -155,25 +156,48 @@ class FooterWidget extends StatelessWidget {
   }
 
   Widget _buildSocialBadges(bool isDark) {
-    final socials = ["GH", "LI", "✉"];
+    final socials = [
+      {
+        "label": "GH",
+        "onTap": () => UrlLauncherHelper.launchUrl(PortfolioData.githubUrl),
+      },
+      {
+        "label": "LI",
+        "onTap": () => UrlLauncherHelper.launchUrl(PortfolioData.linkedinUrl),
+      },
+      {
+        "label": "✉",
+        "onTap": () => UrlLauncherHelper.launchEmail(
+          PortfolioData.email,
+          subject: PortfolioData.emailSubject,
+        ),
+      },
+    ];
+
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: socials.map((s) {
         return Container(
           margin: const EdgeInsets.only(left: 8),
-          child: GlassContainer(
-            width: 36,
-            height: 36,
+          child: InkWell(
+            onTap: s["onTap"] as VoidCallback,
             borderRadius: BorderRadius.circular(10),
-            padding: EdgeInsets.zero,
-            child: Center(
-              child: Text(
-                s,
-                style: TextStyle(
-                  fontFamily: AppConstants.fontSans,
-                  fontSize: 12,
-                  fontWeight: FontWeight.bold,
-                  color: isDark ? AppColors.darkTextSecondary : AppColors.lightTextSecondary,
+            child: GlassContainer(
+              width: 36,
+              height: 36,
+              borderRadius: BorderRadius.circular(10),
+              padding: EdgeInsets.zero,
+              child: Center(
+                child: Text(
+                  s["label"] as String,
+                  style: TextStyle(
+                    fontFamily: AppConstants.fontSans,
+                    fontSize: 12,
+                    fontWeight: FontWeight.bold,
+                    color: isDark
+                        ? AppColors.darkTextSecondary
+                        : AppColors.lightTextSecondary,
+                  ),
                 ),
               ),
             ),

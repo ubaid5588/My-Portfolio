@@ -15,10 +15,12 @@ class PortfolioData {
   static const String bio =
       "I'm a Flutter Developer with hands-on experience building cross-platform mobile applications using Flutter and Dart. I enjoy creating responsive interfaces, integrating APIs and Firebase services, implementing local storage and building maintainable application architecture.";
   static const String email = "Muhammadubaid5588@gmail.com";
+  static const String emailSubject = "Service Inquiry";
   static const String phone = "+92 340 6797227";
   static const String location = "Khyber Pakhtunkhwa, Pakistan";
   static const String githubUrl = "https://github.com/ubaid5588";
-  static const String linkedinUrl = "https://linkedin.com";
+  static const String linkedinUrl =
+      "https://www.linkedin.com/in/muhammad-ubaid-804992206";
   static const String resumePdfAssetPath = "assets/pdf/Muhammad_Ubaid_Resume.pdf";
   static const String resumePdfFileName = "Muhammad_Ubaid_Resume.pdf";
 

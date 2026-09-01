@@ -5,6 +5,7 @@ import '../../core/constants/app_constants.dart';
 import '../../core/constants/portfolio_data.dart';
 import '../../core/responsive/responsive_layout.dart';
 import '../../core/utils/file_download_helper.dart';
+import '../../core/utils/url_launcher_helper.dart';
 import '../common/glass_container.dart';
 import '../common/gradient_text.dart';
 
@@ -285,35 +286,62 @@ class _HeroWidgetState extends State<HeroWidget>
         // Social Links
         Row(
           children: [
-            _buildSocialLink("GitHub", "⌥", isDark),
+            _buildSocialLink(
+              "GitHub",
+              "⌥",
+              isDark,
+              () => UrlLauncherHelper.launchUrl(PortfolioData.githubUrl),
+            ),
             const SizedBox(width: 24),
-            _buildSocialLink("LinkedIn", "💼", isDark),
+            _buildSocialLink(
+              "LinkedIn",
+              "💼",
+              isDark,
+              () => UrlLauncherHelper.launchUrl(PortfolioData.linkedinUrl),
+            ),
             const SizedBox(width: 24),
-            _buildSocialLink("Email", "✉️", isDark),
+            _buildSocialLink(
+              "Email",
+              "✉️",
+              isDark,
+              () => UrlLauncherHelper.launchEmail(
+                PortfolioData.email,
+                subject: PortfolioData.emailSubject,
+              ),
+            ),
           ],
         ),
       ],
     );
   }
 
-  Widget _buildSocialLink(String label, String icon, bool isDark) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Text(icon, style: const TextStyle(fontSize: 14)),
-        const SizedBox(width: 6),
-        Text(
-          label,
-          style: TextStyle(
-            fontFamily: AppConstants.fontSans,
-            fontSize: 13,
-            fontWeight: FontWeight.w500,
-            color: isDark
-                ? const Color(0xFFA0BFFF).withValues(alpha: 0.7)
-                : const Color(0xFF3A6FE0).withValues(alpha: 0.8),
+  Widget _buildSocialLink(
+    String label,
+    String icon,
+    bool isDark,
+    VoidCallback onTap,
+  ) {
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(8),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(icon, style: const TextStyle(fontSize: 14)),
+          const SizedBox(width: 6),
+          Text(
+            label,
+            style: TextStyle(
+              fontFamily: AppConstants.fontSans,
+              fontSize: 13,
+              fontWeight: FontWeight.w500,
+              color: isDark
+                  ? const Color(0xFFA0BFFF).withValues(alpha: 0.7)
+                  : const Color(0xFF3A6FE0).withValues(alpha: 0.8),
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 

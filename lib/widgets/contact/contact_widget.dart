@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../core/constants/app_colors.dart';
 import '../../core/constants/app_constants.dart';
 import '../../core/constants/portfolio_data.dart';
+import '../../core/utils/url_launcher_helper.dart';
 import '../common/glass_container.dart';
 import '../common/gradient_text.dart';
 
@@ -116,9 +117,32 @@ class ContactWidget extends StatelessWidget {
                           mainAxisSpacing: 16,
                           childAspectRatio: isMobile ? 3.0 : 1.35,
                           children: [
-                            _buildChannelCard("📧", "Email", PortfolioData.email, isDark),
-                            _buildChannelCard("📞", "Phone", PortfolioData.phone, isDark),
-                            _buildChannelCard("📍", "Location", PortfolioData.location, isDark),
+                            _buildChannelCard(
+                              "📧",
+                              "Email",
+                              PortfolioData.email,
+                              isDark,
+                              () => UrlLauncherHelper.launchEmail(
+                                PortfolioData.email,
+                                subject: PortfolioData.emailSubject,
+                              ),
+                            ),
+                            _buildChannelCard(
+                              "📞",
+                              "Phone",
+                              PortfolioData.phone,
+                              isDark,
+                              () => UrlLauncherHelper.launchPhone(
+                                PortfolioData.phone,
+                              ),
+                            ),
+                            _buildChannelCard(
+                              "📍",
+                              "Location",
+                              PortfolioData.location,
+                              isDark,
+                              null,
+                            ),
                           ],
                         );
                       },
@@ -132,75 +156,109 @@ class ContactWidget extends StatelessWidget {
                       alignment: WrapAlignment.center,
                       children: [
                         // Primary Email CTA
-                        Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 26, vertical: 14),
-                          decoration: BoxDecoration(
-                            gradient: AppColors.buttonGradient,
-                            borderRadius: BorderRadius.circular(16),
-                            boxShadow: [
-                              BoxShadow(
-                                color: AppColors.accentBlue.withValues(alpha: 0.35),
-                                blurRadius: 20,
-                                offset: const Offset(0, 6),
-                              ),
-                            ],
+                        InkWell(
+                          onTap: () => UrlLauncherHelper.launchEmail(
+                            PortfolioData.email,
+                            subject: PortfolioData.emailSubject,
                           ),
-                          child: const Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Text("✉️  ", style: TextStyle(fontSize: 14)),
-                              Text(
-                                "Email Me",
-                                style: TextStyle(
-                                  fontFamily: AppConstants.fontSans,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white,
+                          borderRadius: BorderRadius.circular(16),
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 26,
+                              vertical: 14,
+                            ),
+                            decoration: BoxDecoration(
+                              gradient: AppColors.buttonGradient,
+                              borderRadius: BorderRadius.circular(16),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: AppColors.accentBlue.withValues(
+                                    alpha: 0.35,
+                                  ),
+                                  blurRadius: 20,
+                                  offset: const Offset(0, 6),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
+                            child: const Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text("✉️  ", style: TextStyle(fontSize: 14)),
+                                Text(
+                                  "Email Me",
+                                  style: TextStyle(
+                                    fontFamily: AppConstants.fontSans,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
 
                         // GitHub Button
-                        GlassContainer(
+                        InkWell(
+                          onTap: () => UrlLauncherHelper.launchUrl(
+                            PortfolioData.githubUrl,
+                          ),
                           borderRadius: BorderRadius.circular(16),
-                          padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 14),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              const Text("⌥ ", style: TextStyle(fontSize: 14)),
-                              Text(
-                                "GitHub",
-                                style: TextStyle(
-                                  fontFamily: AppConstants.fontSans,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w600,
-                                  color: isDark ? const Color(0xFFA0BFFF) : const Color(0xFF3A6FE0),
+                          child: GlassContainer(
+                            borderRadius: BorderRadius.circular(16),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 22,
+                              vertical: 14,
+                            ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                const Text("⌥ ", style: TextStyle(fontSize: 14)),
+                                Text(
+                                  "GitHub",
+                                  style: TextStyle(
+                                    fontFamily: AppConstants.fontSans,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w600,
+                                    color: isDark
+                                        ? const Color(0xFFA0BFFF)
+                                        : const Color(0xFF3A6FE0),
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
 
                         // LinkedIn Button
-                        GlassContainer(
+                        InkWell(
+                          onTap: () => UrlLauncherHelper.launchUrl(
+                            PortfolioData.linkedinUrl,
+                          ),
                           borderRadius: BorderRadius.circular(16),
-                          padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 14),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              const Text("💼 ", style: TextStyle(fontSize: 14)),
-                              Text(
-                                "LinkedIn",
-                                style: TextStyle(
-                                  fontFamily: AppConstants.fontSans,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w600,
-                                  color: isDark ? const Color(0xFFA0BFFF) : const Color(0xFF3A6FE0),
+                          child: GlassContainer(
+                            borderRadius: BorderRadius.circular(16),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 22,
+                              vertical: 14,
+                            ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                const Text("💼 ", style: TextStyle(fontSize: 14)),
+                                Text(
+                                  "LinkedIn",
+                                  style: TextStyle(
+                                    fontFamily: AppConstants.fontSans,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w600,
+                                    color: isDark
+                                        ? const Color(0xFFA0BFFF)
+                                        : const Color(0xFF3A6FE0),
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
                       ],
@@ -215,8 +273,14 @@ class ContactWidget extends StatelessWidget {
     );
   }
 
-  Widget _buildChannelCard(String icon, String label, String value, bool isDark) {
-    return GlassContainer(
+  Widget _buildChannelCard(
+    String icon,
+    String label,
+    String value,
+    bool isDark,
+    VoidCallback? onTap,
+  ) {
+    final card = GlassContainer(
       variant: GlassVariant.subtle,
       borderRadius: BorderRadius.circular(18),
       padding: const EdgeInsets.all(16),
@@ -251,5 +315,14 @@ class ContactWidget extends StatelessWidget {
         ],
       ),
     );
+
+    if (onTap != null) {
+      return InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(18),
+        child: card,
+      );
+    }
+    return card;
   }
 }

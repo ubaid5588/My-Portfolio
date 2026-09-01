@@ -3,6 +3,7 @@ import '../../core/constants/app_colors.dart';
 import '../../core/constants/app_constants.dart';
 import '../../core/constants/portfolio_data.dart';
 import '../../core/responsive/responsive_layout.dart';
+import '../../core/utils/url_launcher_helper.dart';
 import '../common/glass_container.dart';
 import '../common/gradient_text.dart';
 import '../common/section_header.dart';
@@ -135,9 +136,20 @@ class AboutWidget extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    _buildMiniBadge("⌥ GitHub", isDark),
+                    _buildMiniBadge(
+                      "⌥ GitHub",
+                      isDark,
+                      () => UrlLauncherHelper.launchUrl(PortfolioData.githubUrl),
+                    ),
                     const SizedBox(width: 8),
-                    _buildMiniBadge("✉️ Email", isDark),
+                    _buildMiniBadge(
+                      "✉️ Email",
+                      isDark,
+                      () => UrlLauncherHelper.launchEmail(
+                        PortfolioData.email,
+                        subject: PortfolioData.emailSubject,
+                      ),
+                    ),
                   ],
                 ),
               ],
@@ -149,11 +161,24 @@ class AboutWidget extends StatelessWidget {
             padding: const EdgeInsets.all(24),
             child: Column(
               children: [
-                _buildInfoRow("📍", PortfolioData.location, isDark),
+                _buildInfoRow("📍", PortfolioData.location, isDark, null),
                 const SizedBox(height: 14),
-                _buildInfoRow("📧", PortfolioData.email, isDark),
+                _buildInfoRow(
+                  "📧",
+                  PortfolioData.email,
+                  isDark,
+                  () => UrlLauncherHelper.launchEmail(
+                    PortfolioData.email,
+                    subject: PortfolioData.emailSubject,
+                  ),
+                ),
                 const SizedBox(height: 14),
-                _buildInfoRow("📞", PortfolioData.phone, isDark),
+                _buildInfoRow(
+                  "📞",
+                  PortfolioData.phone,
+                  isDark,
+                  () => UrlLauncherHelper.launchPhone(PortfolioData.phone),
+                ),
               ],
             ),
           ),
@@ -162,25 +187,34 @@ class AboutWidget extends StatelessWidget {
     );
   }
 
-  Widget _buildMiniBadge(String label, bool isDark) {
-    return GlassContainer(
-      variant: GlassVariant.subtle,
+  Widget _buildMiniBadge(String label, bool isDark, VoidCallback onTap) {
+    return InkWell(
+      onTap: onTap,
       borderRadius: BorderRadius.circular(10),
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-      child: Text(
-        label,
-        style: TextStyle(
-          fontFamily: AppConstants.fontSans,
-          fontSize: 12,
-          fontWeight: FontWeight.w500,
-          color: isDark ? const Color(0xFFA0BFFF) : const Color(0xFF3A6FE0),
+      child: GlassContainer(
+        variant: GlassVariant.subtle,
+        borderRadius: BorderRadius.circular(10),
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+        child: Text(
+          label,
+          style: TextStyle(
+            fontFamily: AppConstants.fontSans,
+            fontSize: 12,
+            fontWeight: FontWeight.w500,
+            color: isDark ? const Color(0xFFA0BFFF) : const Color(0xFF3A6FE0),
+          ),
         ),
       ),
     );
   }
 
-  Widget _buildInfoRow(String icon, String text, bool isDark) {
-    return Row(
+  Widget _buildInfoRow(
+    String icon,
+    String text,
+    bool isDark,
+    VoidCallback? onTap,
+  ) {
+    final row = Row(
       children: [
         Text(icon, style: const TextStyle(fontSize: 14)),
         const SizedBox(width: 12),
@@ -190,12 +224,23 @@ class AboutWidget extends StatelessWidget {
             style: TextStyle(
               fontFamily: AppConstants.fontMono,
               fontSize: 12,
-              color: isDark ? AppColors.darkTextSecondary : AppColors.lightTextSecondary,
+              color: isDark
+                  ? AppColors.darkTextSecondary
+                  : AppColors.lightTextSecondary,
             ),
           ),
         ),
       ],
     );
+
+    if (onTap != null) {
+      return InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(6),
+        child: row,
+      );
+    }
+    return row;
   }
 
   Widget _buildBioAndPhilosophy(BuildContext context, bool isDark) {

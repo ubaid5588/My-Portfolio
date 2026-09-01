@@ -3,10 +3,9 @@ import '../../core/constants/app_colors.dart';
 import '../../core/constants/app_constants.dart';
 import '../../core/constants/portfolio_data.dart';
 import '../../core/responsive/responsive_layout.dart';
+import '../../core/utils/url_launcher_helper.dart';
 import '../../models/project.dart';
-// import '../../models/service.dart';
 import '../common/glass_container.dart';
-// import '../common/gradient_text.dart';
 import '../common/section_header.dart';
 
 class ProjectsWidget extends StatefulWidget {
@@ -391,58 +390,70 @@ class _ProjectsWidgetState extends State<ProjectsWidget> {
                     Row(
                       children: [
                         Expanded(
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(vertical: 12),
-                            decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                                colors: [
-                                  project.color,
-                                  project.color.withValues(alpha: 0.7),
+                          child: InkWell(
+                            onTap: () => UrlLauncherHelper.launchUrl(
+                              PortfolioData.githubUrl,
+                            ),
+                            borderRadius: BorderRadius.circular(14),
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(vertical: 12),
+                              decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                  colors: [
+                                    project.color,
+                                    project.color.withValues(alpha: 0.7),
+                                  ],
+                                ),
+                                borderRadius: BorderRadius.circular(14),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: project.color.withValues(alpha: 0.3),
+                                    blurRadius: 16,
+                                    offset: const Offset(0, 4),
+                                  ),
                                 ],
                               ),
-                              borderRadius: BorderRadius.circular(14),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: project.color.withValues(alpha: 0.3),
-                                  blurRadius: 16,
-                                  offset: const Offset(0, 4),
+                              alignment: Alignment.center,
+                              child: const Text(
+                                "View Project →",
+                                style: TextStyle(
+                                  fontFamily: AppConstants.fontSans,
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
                                 ),
-                              ],
-                            ),
-                            alignment: Alignment.center,
-                            child: const Text(
-                              "View Project →",
-                              style: TextStyle(
-                                fontFamily: AppConstants.fontSans,
-                                fontSize: 13,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
                               ),
                             ),
                           ),
                         ),
                         const SizedBox(width: 12),
-                        GlassContainer(
-                          borderRadius: BorderRadius.circular(14),
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 18,
-                            vertical: 12,
+                        InkWell(
+                          onTap: () => UrlLauncherHelper.launchUrl(
+                            PortfolioData.githubUrl,
                           ),
-                          child: Row(
-                            children: [
-                              const Text("⌥ ", style: TextStyle(fontSize: 14)),
-                              Text(
-                                "GitHub",
-                                style: TextStyle(
-                                  fontFamily: AppConstants.fontSans,
-                                  fontSize: 13,
-                                  fontWeight: FontWeight.w600,
-                                  color: isDark
-                                      ? const Color(0xFFA0BFFF)
-                                      : const Color(0xFF3A6FE0),
+                          borderRadius: BorderRadius.circular(14),
+                          child: GlassContainer(
+                            borderRadius: BorderRadius.circular(14),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 18,
+                              vertical: 12,
+                            ),
+                            child: Row(
+                              children: [
+                                const Text("⌥ ", style: TextStyle(fontSize: 14)),
+                                Text(
+                                  "GitHub",
+                                  style: TextStyle(
+                                    fontFamily: AppConstants.fontSans,
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.w600,
+                                    color: isDark
+                                        ? const Color(0xFFA0BFFF)
+                                        : const Color(0xFF3A6FE0),
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
                       ],
