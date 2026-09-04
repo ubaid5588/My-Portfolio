@@ -1,6 +1,7 @@
 # Netlify configuration for Flutter Web Portfolio
 
 [build]
+  command = "bash build.sh"
   publish = "build/web"
 
 [[redirects]]
