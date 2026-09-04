@@ -31,6 +31,13 @@ class _PortfolioAppState extends State<PortfolioApp> {
       darkTheme: AppTheme.darkTheme,
       themeMode: _themeMode,
       home: PortfolioScreen(onThemeToggle: _toggleTheme, isDark: isDark),
+      onGenerateRoute: (settings) {
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (context) =>
+              PortfolioScreen(onThemeToggle: _toggleTheme, isDark: isDark),
+        );
+      },
     );
   }
 }
